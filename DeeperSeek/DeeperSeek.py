@@ -121,7 +121,7 @@ class DeepSeek:
         )
 
         self.logger.debug("Navigating to the main page...")
-        chat_url = "https://chat.deepseek.com/"
+        chat_url = "https://chat.deepseek.com/" if not self._chat_id else f"https://chat.deepseek.com/a/chat/s/{self._chat_id}"
         await self.browser.get(chat_url)
         self.logger.debug(f"Navigated to: {chat_url}")
 
@@ -235,8 +235,7 @@ class DeepSeek:
                 if not token_failed else "Both token and email/password are incorrect")
 
         self.logger.debug(f"Logged in successfully using email and password! {'(Token method failed)' if token_failed else ''}")
-    
-        self.logger.debug("Navigating to the chat page...")
+        self.logger.debug("Navigating to the main page...")
         chat_url = "https://chat.deepseek.com/" if not self._chat_id else f"https://chat.deepseek.com/a/chat/s/{self._chat_id}"
         await self.browser.get(chat_url)
         self.logger.debug(f"Navigated to: {chat_url}")
