@@ -120,9 +120,10 @@ class DeepSeek:
             headless = self._headless
         )
 
-        self.logger.debug("Navigating to the chat page...")
-        await self.browser.get("https://chat.deepseek.com/" if not self._chat_id \
-            else f"https://chat.deepseek.com/a/chat/s/{self._chat_id}")
+        self.logger.debug("Navigating to the main page...")
+        chat_url = "https://chat.deepseek.com/" if not self._chat_id else f"https://chat.deepseek.com/a/chat/s/{self._chat_id}"
+        await self.browser.get(chat_url)
+        self.logger.debug(f"Navigated to: {chat_url}")
 
         if self._attempt_cf_bypass:
             try:
@@ -234,7 +235,12 @@ class DeepSeek:
                 if not token_failed else "Both token and email/password are incorrect")
 
         self.logger.debug(f"Logged in successfully using email and password! {'(Token method failed)' if token_failed else ''}")
-    
+        self.logger.debug("Navigating to the main page...")
+        chat_url = "https://chat.deepseek.com/" if not self._chat_id else f"https://chat.deepseek.com/a/chat/s/{self._chat_id}"
+        await self.browser.get(chat_url)
+        self.logger.debug(f"Navigated to: {chat_url}")
+
+
     async def _dev_debug(self) -> None:
         """A method for debugging purposes.
         
