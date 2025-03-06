@@ -540,8 +540,7 @@ class DeepSeek:
 
         self.logger.debug("Extracting the response text...")
         soup = BeautifulSoup(repr(response_generated[-1]), 'html.parser')
-        markdown_blocks = soup.find_all("div", class_ = "ds-markdown ds-markdown--block")
-        response_text = "\n\n".join(get_text(str(block)).strip() for block in markdown_blocks)
+        response_text = str(await self.browser.main_tab.evaluate("document.querySelectorAll('.ds-markdown.ds-markdown--block').values().map((r => { for (p in r.parentElement) if (p.startsWith('__reactFiber$')) return r.parentElement[p].pendingProps.children[3].props.markdown })).toArray().join(' ');"))
 
         if response_text.lower() == "the server is busy. please try again later.":
             raise ServerDown("The server is busy. Please try again later.")
